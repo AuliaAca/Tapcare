@@ -1,0 +1,127 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/plus-jakarta-sans';
+
+@custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
+
+/*
+ * Design tokens. OKLCH keeps lightness perceptually even, which matters
+ * for contrast on a product used by people with weaker eyesight.
+ */
+@theme {
+  --font-sans: 'Plus Jakarta Sans Variable', ui-sans-serif, system-ui, sans-serif;
+
+  --color-brand-50: oklch(0.97 0.02 290);
+  --color-brand-100: oklch(0.93 0.05 290);
+  --color-brand-200: oklch(0.86 0.09 289);
+  --color-brand-400: oklch(0.67 0.19 287);
+  --color-brand-500: oklch(0.56 0.24 285);
+  --color-brand-600: oklch(0.49 0.24 284);
+  --color-brand-700: oklch(0.42 0.21 284);
+
+  --color-success-500: oklch(0.64 0.16 152);
+  --color-success-50: oklch(0.96 0.04 152);
+  --color-caution-500: oklch(0.75 0.16 70);
+  --color-caution-50: oklch(0.97 0.05 85);
+  --color-danger-500: oklch(0.58 0.21 27);
+  --color-danger-50: oklch(0.96 0.03 27);
+
+  --radius-card: 1.75rem;
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  --animate-pulse-ring: pulse-ring 1.6s ease-out infinite;
+  --animate-scan: scan 2.2s ease-in-out infinite;
+
+  @keyframes pulse-ring {
+    0% {
+      box-shadow: 0 0 0 0 oklch(0.67 0.19 287 / 0.75);
+    }
+    100% {
+      box-shadow: 0 0 0 22px oklch(0.67 0.19 287 / 0);
+    }
+  }
+  @keyframes scan {
+    0%,
+    100% {
+      top: 4%;
+    }
+    50% {
+      top: 92%;
+    }
+  }
+}
+
+/* Semantic surface tokens that flip with the theme. */
+:root {
+  --bg: oklch(0.985 0.008 290);
+  --surface: oklch(1 0 0);
+  --surface-muted: oklch(0.965 0.012 290);
+  --ink: oklch(0.22 0.03 285);
+  --ink-muted: oklch(0.47 0.03 285);
+  --line: oklch(0.91 0.015 290);
+  color-scheme: light;
+}
+
+[data-theme='dark'] {
+  --bg: oklch(0.17 0.025 285);
+  --surface: oklch(0.22 0.03 285);
+  --surface-muted: oklch(0.27 0.03 285);
+  --ink: oklch(0.97 0.01 290);
+  --ink-muted: oklch(0.78 0.03 290);
+  --line: oklch(0.33 0.03 285);
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-line: var(--line);
+}
+
+/* Text size setting scales every rem-based size in the app. */
+html {
+  font-size: 18px;
+  -webkit-text-size-adjust: 100%;
+}
+html[data-text-scale='lg'] {
+  font-size: 20px;
+}
+html[data-text-scale='xl'] {
+  font-size: 23px;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
+#root {
+  min-height: 100dvh;
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-brand-400);
+  outline-offset: 3px;
+}
+
+dialog::backdrop {
+  background: oklch(0.15 0.03 285 / 0.45);
+  backdrop-filter: blur(6px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

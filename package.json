@@ -1,0 +1,62 @@
+{
+  "name": "tapcare",
+  "version": "0.1.0",
+  "private": true,
+  "description": "TapCare \u2014 an agentic AI companion that reads unfamiliar kiosk screens through your phone camera and guides you one tap at a time.",
+  "type": "module",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "engines": {
+    "node": ">=22.9"
+  },
+  "scripts": {
+    "dev": "concurrently -k -n server,web -c magenta,cyan \"npm:dev:server\" \"npm:dev:web\"",
+    "dev:phone": "concurrently -k -n server,web -c magenta,cyan \"npm:dev:server\" \"npm run dev:phone --workspace @tapcare/web\"",
+    "dev:web": "npm run dev --workspace @tapcare/web",
+    "dev:server": "npm run dev --workspace @tapcare/server",
+    "build": "npm run build --workspace @tapcare/web && npm run build --workspace @tapcare/server",
+    "start": "npm run start --workspace @tapcare/server",
+    "lint": "eslint . --max-warnings=0",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "test:e2e": "playwright test",
+    "check": "npm run format:check && npm run lint && npm run typecheck && npm run test:coverage",
+    "prepare": "husky || true"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js}": [
+      "eslint --max-warnings=0 --fix",
+      "prettier --write"
+    ],
+    "*.{json,md,css,yml,yaml,html}": "prettier --write"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
+    "@commitlint/cli": "^21.2.3",
+    "@commitlint/config-conventional": "^21.2.3",
+    "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.63.0",
+    "@vitest/coverage-v8": "^5.0.3",
+    "concurrently": "^10.0.5",
+    "eslint": "^10.12.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.7",
+    "globals": "^17.13.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.4.0",
+    "prettier": "^3.9.9",
+    "typescript": "~6.0.3",
+    "typescript-eslint": "^8.71.0",
+    "vitest": "^5.0.3"
+  },
+  "overrides": {
+    "esbuild": "^0.28.2"
+  }
+}
